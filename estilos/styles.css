@@ -1,0 +1,109 @@
+/*SCSS*/ /*Defino la grilla de contacto.html*/
+.explicacionContacto {
+  grid-area: explicacionContacto;
+}
+
+.grillaContacto {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-areas: "cabecera" "deseo" "explicacionContacto" "pie";
+}
+
+.explicacionContacto {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  grid-template-columns: 1fr;
+}
+
+/*Formulario de Contacto*/
+.iniform {
+  margin-top: 25px;
+  font-weight: normal;
+  font-size: large;
+}
+
+.finform {
+  margin-bottom: 50px;
+}
+
+div.row {
+  padding: 5px;
+  margin: 5px;
+  font-weight: normal;
+}
+
+/*Fin del SCSS--------------------------------*/
+/**body{
+    background: url("http://imgfz.com/i/gjzUYeI.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    opacity: 0.85;
+}
+h1{
+    text-align: center;
+    font-family: 'arial';
+}
+label{
+    font-family: 'arial';
+    font-weight: bold;
+}
+.form{
+    width: 550px;
+    margin: 0 auto;
+    margin-top: 80px;
+    border:  2px;
+}
+input{
+    width: 200px;
+    margin-bottom: 10px;
+    padding: 8px;
+    margin-right: -6px;
+    background-color: #fdfef7;
+    border: #173441 1.8px solid;
+}
+fieldset{
+    border: #173441 2px solid;
+    border-radius: 10px;
+    background-color: #d1ddbe;
+}
+button{
+    background-color: #fdfef7;
+    border: #173441 1.8px solid;
+    width: 100px;
+    font-family: 'arial';
+    font-size: 15px;  
+    border-radius: 2px;
+    padding: 10px;
+    margin-left:77%;
+}
+i{
+    background-color: #fdfef7;
+    color: rgb(156, 155, 155);
+    border: #173441 1px solid;
+    padding: 6.8px 8px 9.8px 8px;
+    border-left: white;
+    margin-bottom: 10px;
+}
+.tab{
+    border-collapse: collapse;
+    text-align: center;
+    font-family: 'arial';
+    background-color: #fdfef7;
+    border: #173441 2px solid;
+    margin: 0 auto;
+    width: 500px;
+}
+thead{
+    border: #173441 2px solid;
+    font-weight: bold;
+}
+tr{
+    border: #173441 2px solid;
+}
+td{
+    border: #173441 2px solid;    
+}*/
+div .invento {
+  border: 10px solid red;
+}/*# sourceMappingURL=styles.css.map */
