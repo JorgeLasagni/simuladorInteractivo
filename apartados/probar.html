@@ -4,36 +4,94 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Interactivo JML - Créditos</title>
     <link rel="stylesheet" href="../estilos/styles.css">
-    <title>Simulador de PRUEBA</title>
+    <link rel="icon"   href="../imagenes/favicon.ico" type="image/x-ico" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 </head>
 <body>
     <header>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="../index.html">Simulador Interactivo<img src="../imagenes/logoSimuladorCara.jpg" alt="logo Simulador Cara" ></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div class="navbar-nav">
+                            <a class="nav-link active" aria-current="page" href="../apartados/contacto.html">Contacto</a>
+                        <a class="nav-link" href="../apartados/prestamo.html">Créditos</a>
+                        <a class="nav-link" href="../apartados/probar.html">Pruebas</a>
+                        <!--a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a-->
+                        </div>
+                    </div>
+                </div>
+            </nav>
         <h1>
             "Estamos en la página de Prueba"
         </h1>
     </header>
     <main>
+    <!---------------------------------------------------------------->
+    <select class="form-select" aria-label="Default select example" id="sistema">
+        <option selected>Seleccione el Sistema de Cálculo</option>
+        <option value="1">Alemán</option>
+        <option value="2">Francés</option>
+    </select>
+    <br>
+    <div> CAPITAL: <input type="number"             placeholder="Ingrese el capital prestado"       id="capital">   </div>
+    <br>
+    <div> INTERÉS: <input type="text"               placeholder="Ingrese el interés anual"          id="interes">   </div>
+    <br>
+    <div> Plazo (en años): <input type="text"       placeholder="Ingrese plazo anual para pagar"    id="plazo">     </div>
+    <br>
+    <select class="form-select" aria-label="Default select example" id="frecuencia">
+        <option selected>Seleccione la frecuencia de pago</option>
+        <option value="1">Mensual       </option>
+        <option value="2">Bimestral     </option>
+        <option value="3">Trimestral    </option>
+        <option value="4">Cuatrimestral </option>
+        <option value="6">Semestral     </option>
+        <option value="12">Anual        </option>
+    </select>
+    <br>
+    <br>
+    <div> Calcular: <button onclick="genero_cuotas();">CALCULAR</button> </div>
+    <br>
+    <br>
+    <!---------------------------------------------------------------->
+    <table class="tab table table-dark">
         <!------------------------------------------------------------->
-        <div class="container-fluid p-3 mb-2 bg-success text-dark">
-            A fluid sss container that uses the full witdh
-        </div>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">CAPITAL</th>
+                <th scope="col">Cuota Capital</th>
+                <th scope="col">Cuota Interés</th>
+                <th scope="col">Cuota Total</th>
+            </tr>
+        </thead>
         <!------------------------------------------------------------->
-        <div class="form-floating">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                <option selected>Seleccione el sistema a utilizar...</option>
-                <option value="1">Sistema Francés </option>
-                <option value="2">Sistema Alemán  </option>
-            </select>
-            <label for="floatingSelect">Sistemas de cálculo</label>
+        <tbody id="tab">
+        </tbody>
         <!------------------------------------------------------------->
+        <!--tfoot>
+            <tr>
+                <td class="ft">TOTAL</td>
+                <td id="t1"></td>
+                <td id="t2"></td>
+                <td id="t3"></td>
+            </tr>
+        </tfoot-->
+        <!------------------------------------------------------------->
+    </table>
     </main>
-    <footer>
 
+    <footer>
     </footer>
     <!---------------------------------------------------------------->
+    <script src="../procedimientos/pruebas.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!---------------------------------------------------------------->
 </body>
