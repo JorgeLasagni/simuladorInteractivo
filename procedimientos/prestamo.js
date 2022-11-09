@@ -56,7 +56,8 @@ function genero_cuotas(){
             case 2:
                 if (n > 0){
                     //Cuota Total
-                    ct = (v * (i/100)) / (1-(potencia((1+(i/100)),-p)));
+                    pot = potencia((1+(ieq/100)),-m);
+                    ct  = (v * (ieq/100)) / (1 - pot);
                     //Cuota Interés (amortización)
                     ci = ca * ieq / 100;
                     //Cuota Capital
@@ -85,15 +86,17 @@ function genero_cuotas(){
         c2=cc.toFixed(0);
         c3=ci.toFixed(0);
         c4=ct.toFixed(0);
-        //Cargo la fila en la tabla
-        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-            `<tr class="table-primary">
-                <th scope="row">${n}</th>
-                <td> ${c1} </td>
-                <td> ${c2} </td>
-                <td> ${c3} </td>
-                <td> ${c4} </td>
-            </tr>`;
+        if (n>0){
+            //Cargo la fila en la tabla
+            document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+                `<tr class="table-primary">
+                    <th scope="row">${n}</th>
+                    <td> ${c1} </td>
+                    <td> ${c2} </td>
+                    <td> ${c3} </td>
+                    <td> ${c4} </td>
+                </tr>`;
+        }
     }
     //------------------------------------------------------------------
     //Cargo los totales a la tabla

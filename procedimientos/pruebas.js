@@ -30,8 +30,12 @@ function genero_cuotas(){
 
     //Valores intermedios necesarios para los cálculos
     let cpa = 12 / f    //cantidad de pagos por año
+    //alert("cpa:"+cpa);
     let ieq = i / cpa   //interés equivalente por período de pago
+    //let ieq = i / f   //interés equivalente por período de pago
+    //alert("ieq:"+ieq)
     let m   = p * cpa   //Cantidad de pagos en el plazo anual
+    //alert("m:"+m)
     let ca  = v         //Capital Vivo!!
     let desde = 0
     //alert("por entrar al switch");
@@ -67,8 +71,21 @@ function genero_cuotas(){
                 //alert("case 2...n:"+n)
                 if (n > 0){
                     //Cuota Total
-                    ct = (v * (i/100)) / (1-(potencia((1+(i/100)),-p)));
+                    //ct = (v * (i/100)) / (1-(potencia((1+(i/100)),-m)));
+                    //ct = ct / p
+                    //ct = (v * (ieq/100)) / (1-(potencia((1+(ieq/100)),-p)));
 
+                    //ct = (v * (i/(cpa*5))) / (1-(potencia((1+(i/cpa)),-(m))));
+                    pot = potencia((1+(ieq/100)),-m);
+                    ct  = (v * (ieq/100)) / (1 - pot);
+                    
+                    //ct = v * (pot *i)/(pot - 1);
+                    //ct = ct / m
+                    
+                    //if(n==0 || n==1){
+                      //  
+                        //alert("n:"+n+"pot:"+pot+ " cuota total:"+ct);
+                    //}
                     //alert("a:"+a)
                     //ct = v * (i/100);
                     //alert("ct:"+ct)
@@ -81,10 +98,15 @@ function genero_cuotas(){
 
                     //Cuota Interés (amortización)
                     ci = ca * ieq / 100;
+                    //alert("n:"+n+"ca:"+ca+ " ieq:"+ieq);
+
                     //Cuota Capital
                     cc = ct - ci;
+
                     //Capital
                     ca = ca - cc;
+                    
+
                 } else{
                     //Cuota Total
                     //a  = 0;
@@ -107,10 +129,10 @@ function genero_cuotas(){
         //Preparo los parciales para la tabla
        // alert("por sacar decimales")
 
-        c1=ca.toFixed(2);
-        c2=cc.toFixed(2);
-        c3=ci.toFixed(2);
-        c4=ct.toFixed(2);
+        c1=ca.toFixed(0);
+        c2=cc.toFixed(0);
+        c3=ci.toFixed(0);
+        c4=ct.toFixed(0);
         //alert(21)
         //Cargo la fila en la tabla
         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
@@ -126,9 +148,9 @@ function genero_cuotas(){
     //------------------------------------------------------------------
     //Cargo los totales a la tabla
     //Paso los totales a dos decimales
-    ct2=cct.toFixed(2);
-    ct3=cit.toFixed(2);
-    ct4=ctt.toFixed(2);
+    ct2=cct.toFixed(0);
+    ct3=cit.toFixed(0);
+    ct4=ctt.toFixed(0);
     //Cargo los totales en la tabla
     document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
         `<tr class="table-dark">
