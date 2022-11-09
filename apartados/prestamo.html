@@ -29,37 +29,60 @@
         </nav>
     </header>
     <main>
-        <!---------------------------------------------------------------->
-        <div> CAPITAL: <input type="number" placeholder="Ingrese el capital prestado"               id="capital">   </div>
-        <br>
-        <div> INTERÉS: <input type="text"   placeholder="Ingrese el interés anual"                  id="interes" >  </div>
-        <br>
-        <div> CUOTAS:  <input type="text"   placeholder="Ingrese cantidad de cuotas (menor a 24)"   id="tiempo">    </div>
-        <br>
-        <br>
-        <div> Calcular: <button onclick="genero_cuotas();">CALCULAR</button> </div>
-        <br>
-        <br>
-        <!---------------------------------------------------------------->
-        <table class="tab table table-dark">
-            <!------------------------------------------------------------->
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">CAPITAL</th>
-                    <th scope="col">Cuota Capital</th>
-                    <th scope="col">Cuota Interés</th>
-                    <th scope="col">Cuota Total</th>
-                </tr>
-            </thead>
-            <!------------------------------------------------------------->
-            <tbody id="tab">
-            </tbody>
-            <!------------------------------------------------------------->
-            <!--tfoot>
-            </tfoot-->
-            <!------------------------------------------------------------->
-        </table>
+            <!---------------------------------------------------------------->
+    <select class="form-select" aria-label="Default select example" id="sistema">
+        <option selected>Seleccione el Sistema de Cálculo de Amortización</option>
+        <option value="1">Alemán</option>
+        <option value="2">Francés</option>
+    </select>
+    <br>
+    <div> CAPITAL: <input type="number"             placeholder="Ingrese el capital prestado"       id="capital">   </div>
+    <br>
+    <div> INTERÉS: <input type="text"               placeholder="Ingrese el interés anual"          id="interes">   </div>
+    <br>
+    <div> Plazo (en años): <input type="text"       placeholder="Ingrese plazo anual para pagar"    id="plazo">     </div>
+    <br>
+    <select class="form-select" aria-label="Default select example" id="frecuencia">
+        <option selected>Seleccione la frecuencia de pago</option>
+        <option value="1">Mensual       </option>
+        <option value="2">Bimestral     </option>
+        <option value="3">Trimestral    </option>
+        <option value="4">Cuatrimestral </option>
+        <option value="6">Semestral     </option>
+        <option value="12">Anual        </option>
+    </select>
+    <br>
+    <br>
+    <div> Calcular: <button onclick="genero_cuotas();">CALCULAR</button> </div>
+    <br>
+    <br>
+    <!---------------------------------------------------------------->
+    <table class="tab table table-dark">
+        <!------------------------------------------------------------->
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">CAPITAL</th>
+                <th scope="col">Cuota Capital</th>
+                <th scope="col">Cuota Interés</th>
+                <th scope="col">Cuota Total</th>
+            </tr>
+        </thead>
+        <!------------------------------------------------------------->
+        <tbody id="tab">
+        </tbody>
+        <!------------------------------------------------------------->
+        <!--tfoot>
+            <tr>
+                <td class="ft">TOTAL</td>
+                <td id="t1"></td>
+                <td id="t2"></td>
+                <td id="t3"></td>
+            </tr>
+        </tfoot-->
+        <!------------------------------------------------------------->
+    </table>
+    
     </main>
     <footer>
     </footer> 
