@@ -82,10 +82,10 @@ function genero_cuotas(){
         cit = cit + ci;
         ctt = ctt + ct;
         //Preparo los parciales para la tabla
-        c1=ca.toFixed(0);
-        c2=cc.toFixed(0);
-        c3=ci.toFixed(0);
-        c4=ct.toFixed(0);
+        c1=ca.toFixed(2);
+        c2=cc.toFixed(2);
+        c3=ci.toFixed(2);
+        c4=ct.toFixed(2);
         if (n>0){
             //Cargo la fila en la tabla
             document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
@@ -101,9 +101,9 @@ function genero_cuotas(){
     //------------------------------------------------------------------
     //Cargo los totales a la tabla
     //Paso los totales a dos decimales
-    ct2=cct.toFixed(0);
-    ct3=cit.toFixed(0);
-    ct4=ctt.toFixed(0);
+    ct2=cct.toFixed(2);
+    ct3=cit.toFixed(2);
+    ct4=ctt.toFixed(2);
     //Cargo los totales en la tabla
     document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
         `<tr class="table-dark">

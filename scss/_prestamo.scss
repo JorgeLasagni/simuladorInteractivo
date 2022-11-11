@@ -1,39 +1,3 @@
-/*SCSS*/ /*Defino la grilla de contacto.html*/
-.explicacionContacto {
-  grid-area: explicacionContacto;
-}
-
-.grillaContacto {
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-areas: "cabecera" "deseo" "explicacionContacto" "pie";
-}
-
-.explicacionContacto {
-  width: 100%;
-  display: grid;
-  grid-template-rows: 1fr;
-  justify-items: center;
-  grid-template-columns: 1fr;
-}
-
-/*Formulario de Contacto*/
-.iniform {
-  margin-top: 25px;
-  font-weight: normal;
-  font-size: large;
-}
-
-.finform {
-  margin-bottom: 50px;
-}
-
-div.row {
-  padding: 5px;
-  margin: 5px;
-  font-weight: normal;
-}
-
 /*body{
     background: url("http://imgfz.com/i/gjzUYeI.jpeg") no-repeat center center fixed;
     background-size: cover;
@@ -103,21 +67,18 @@ tr{
 td{
     border: #173441 2px solid;    
 }*/
-fieldset {
-  border: #173441 2px solid;
-  border-radius: 10px;
-  background-color: #d1ddbe;
-}
 
-.form {
-  width: 550px;
-  margin: 0 auto;
-  margin-top: 6.5px;
+fieldset{
+    border: #173441 2px solid;
+    border-radius: 10px;
+    background-color: #d1ddbe;
 }
-
-.tablita {
-  border: darkblue double 5px;
-  padding-top: 1%;
+.form{
+    width: 550px;
+    margin: 0 auto;
+    margin-top: 6.5px;
 }
-
-/*Fin del SCSS--------------------------------*//*# sourceMappingURL=styles.css.map */
+.tablita{
+    border: darkblue double 5px;
+    padding-top: 1%;
+}
