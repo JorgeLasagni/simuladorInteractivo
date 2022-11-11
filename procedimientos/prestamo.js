@@ -19,27 +19,43 @@ function genero_cuotas(){
     //------------------------------------------------------------------
     //Armo la tabla
     //Sumarizadores para mostrar los Totales
-    let cct = 0.00      //cc Total cuota capital
-    let cit = 0.00      //ci Total cuota interés
-    let ctt = 0.00      //ct Total cuota total 
+    let cct = 0.00;      //cc Total cuota capital
+    let cit = 0.00;     //ci Total cuota interés
+    let ctt = 0.00;     //ct Total cuota total 
 
     //Valores intermedios necesarios para los cálculos
-    let cpa   = 12 / f    //cantidad de pagos por año
-    let ieq   = i / cpa   //interés equivalente por período de pago
-    let m     = p * cpa   //Cantidad de pagos en el plazo anual
-    let ca    = v         //Capital Vivo!!
+    let cpa   = 12 / f;    //cantidad de pagos por año
+    let ieq   = i / cpa;   //interés equivalente por período de pago
+    let m     = p * cpa;   //Cantidad de pagos en el plazo anual
+    let ca    = v;         //Capital Vivo!!
+    let cv    = v;         //Capital Vivo!!
 
-    //Sistema Alemán  1 (arranco el "for en 1")
-    //Sistema Francés 2 (arranco el "for" en 0)
-    let desde = 0         //Inicio del for distinto para cada sistema
+    //Sistema Alemán    1 (arranco el "for en 1")
+    //Sistema Francés   2 (arranco el "for" en 0)
+    //Sistema Americano 3 (arranco el "for" en 1)
+    let desde = 0;         //Inicio del for distinto para cada sistema
     switch(s){
         case 1:
             desde = 1;
             break
         case 2:
             desde = 0;    
-            break 
+            break
+        case 3:
+            desde = 1;
+            break
     }
+    //chequeo el interés para saber qué metodo aplicar para la potencia
+    let queInteres = 0;
+    if(i > 0 && i <= 25){
+        queInteres = 1;
+    } else if(i > 25 && i <= 50){
+        queInteres = 2;
+    } else {
+        queInteres = 3;
+    }
+    //alert("queInteres:"+queInteres);
+    //alert(potencia(2,5,queInteres));
     //------------------------------------------------------------------
     for(n = desde; n <= m; n++){
         switch(s){
@@ -51,19 +67,23 @@ function genero_cuotas(){
                 //Cuota Interés (amortización)
                 ci = ca * ieq / 100;
                 //Cuota Total
-                ct = (cc + ci);
+                ct = cc + ci;
+                cv = cv - cc;
                 break;
             case 2:
                 if (n > 0){
                     //Cuota Total
-                    pot = potencia((1+(ieq/100)),-m);
+                    pot = potencia((1+(ieq/100)),-m,queInteres);
                     ct  = (v * (ieq/100)) / (1 - pot);
                     //Cuota Interés (amortización)
-                    ci = ca * ieq / 100;
+                    //ci = ca * ieq / 100; orig
+                    ci = cv * ieq / 100;
                     //Cuota Capital
                     cc = ct - ci;
                     //Capital
-                    ca = ca - cc;
+                    //ca = ca - cc; orig
+                    ca = cv;
+                    cv = cv - cc;
                 } else{
                     //Cuota Total
                     //a  = 0;
@@ -74,6 +94,23 @@ function genero_cuotas(){
                     cc = 0;
                     //Capital
                     ca = v;
+                    cv = v;
+                }
+                break;
+            case 3:
+                //Capital
+                ca = v;               
+                //Cuota Capital
+                cc = 0;
+                //Cuota Interés (amortización)
+                ci = ca * ieq / 100;
+                //Cuota Total
+                ct = cc + ci;
+                cv = cv - cc;
+                if (n == m){
+                    cc = v;
+                    cv = cv - cc;
+                    ct = cc + ci;              
                 }
                 break;
         }       
@@ -86,6 +123,7 @@ function genero_cuotas(){
         c2=cc.toFixed(2);
         c3=ci.toFixed(2);
         c4=ct.toFixed(2);
+        c5=cv.toFixed(2);
         if (n>0){
             //Cargo la fila en la tabla
             document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
@@ -95,6 +133,7 @@ function genero_cuotas(){
                     <td> ${c2} </td>
                     <td> ${c3} </td>
                     <td> ${c4} </td>
+                    <td> ${c5} </td>
                 </tr>`;
         }
     }
@@ -112,26 +151,26 @@ function genero_cuotas(){
             <td> ${ct2} </td>
             <td> ${ct3} </td>
             <td> ${ct4} </td>
+            <td>        </td>
         </tr>`;
 }
 //----------------------------------------------------------------------
-//----------------------------------------------------------------------
 function valido(ps,pv,pi,pp,pf){
    //Sistema
-    if (ps!=1 && ps!=2){
-        return "El sistema de cálculo debe ser Alemán o Francés"
+    if (ps!=1 && ps!=2 && ps!=3){
+        return "El sistema de cálculo debe ser Alemán o Francés o Americano"
     } 
     //Capital
-    if (pv <= 0){
-        return "El Capital solicitado debe ser mayor a $0"
-    } 
+    if (pv <= 0 || isNaN(pv)){
+        return "El Capital solicitado debe ser numérico y mayor a $0!"
+    }
     //Interés o tasa anual
-    if (pi <= 0){
-        return "El Interés o Tasa Anual debe ser positiva"
+    if (pi <= 0 || isNaN(pi)){
+        return "El Interés o Tasa Anual debe ser numérica y positiva!"
     } 
     //Plazo de pago
-    if (pp <= 0){
-        return "El Plazo de pago debe ser al menos por un año"
+    if (pp <= 0 || isNaN(pp) || !Number.isInteger(pp)){
+        return "El Plazo de pago debe ser numérico, año calendario y mínimo uno!"
     } 
     //Frecuencia de pago
     switch(pf){
@@ -154,22 +193,44 @@ function valido(ps,pv,pi,pp,pf){
 }
 //----------------------------------------------------------------------
 //La función potencia es más clara utilizando el "for" 
+//Para apicar lo visto utilizo las tres iteracciones según el plazo de años
+//case 1 Interés >00  y <= 10% (for)
+//case 2 Interés >10  y <= 20% (while)
+//case 3 Interés >20   (do while)
 // uso el while para aplicar lo visto.
 //Si el exponente es (-) lo multipico por -1 (o debería tomar el valor absoluto)
 // para después obtener como resultado la inversa (1/x). 
 //Si el exponente es positivo el resultado es x
-function potencia (base, exponente){
+function potencia (base, exponente, queAplico){
     let exp = exponente;
+    //Si el exponente es negativo lo  hago positivo
     if (exp < 0){
         exp = exp * (-1);
     }
+
     let res = 1;
     let pot = 1;
 
-    while(pot <= exp){
-        res = res * base;
-        pot++;
-    }
+    switch (queAplico){
+        case 1:
+            while(pot <= exp){
+                res = res * base;
+                pot++;
+            }
+            break;
+        case 2:
+            for(pot = 1; pot <= exp; pot++){
+                res = res * base;
+            }
+            break;
+        case 3:
+            do{
+                res = res * base;
+                pot++;
+            }while(pot <= exp);                
+            break;
+    }   
+    //Si el exponente es negativo, invierto el resultado (1/x)
     if (exponente < 0){
         res = 1 / res;
     }
