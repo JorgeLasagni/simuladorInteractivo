@@ -19,7 +19,7 @@ function genero_cuotas(){
     //------------------------------------------------------------------
     //Armo la tabla
     //Sumarizadores para mostrar los Totales
-    let cct = 0.00;      //cc Total cuota capital
+    let cct = 0.00;     //cc Total cuota capital
     let cit = 0.00;     //ci Total cuota interés
     let ctt = 0.00;     //ct Total cuota total 
 
@@ -137,6 +137,7 @@ function genero_cuotas(){
                 </tr>`;
         }
     }
+    
     //------------------------------------------------------------------
     //Cargo los totales a la tabla
     //Paso los totales a dos decimales
