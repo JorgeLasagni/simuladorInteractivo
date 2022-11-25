@@ -44,15 +44,22 @@
                 <div class="col-8" >
                     <select class="form-select" aria-label="Default select example" id="proceso">
                         <option selected>Seleccione el PROCESO que desea ejecutar</option>
-                        <option value="1">Alta Automática de un lote de libros</option>
-                        <option value="2">Alta Manual de un ejemplar</option>
-                        <option value="3">Baja o Eliminación</option>
-                        <option value="4">Modificación de un ejemplar</option>
-                        <option value="5">Selección de un grupo de libros</option>
-                        <option value="6">Ordenar alfabéticamente según ...</option>
+                        <option value="1">1.- Alta Automática de un lote de libros</option>
+                        <option value="2">2.- Alta Manual de un ejemplar</option>
+                        <option value="3">3.- Baja o Eliminación</option>
+                        <option value="4">4.- Modificación de un ejemplar</option>
+                        <option value="5">5.- Selección de un grupo de libros</option>
+                        <option value="6">6.- Ordenar alfabéticamente según ...</option>
                     </select>
                 </div>
             </div>
+
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <button onclick="generoControl()">PROCESAR</button>
+                </div>
+            </div>
+
             <div class="row justify-content-center">
                 <div class="col-5">  Apellido del Autor<input type="text" placeholder="Ingrese apellido del autor" id="apellido">   
                 </div>

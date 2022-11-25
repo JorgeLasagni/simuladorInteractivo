@@ -28,6 +28,7 @@ let n = 0
 
 
 //alert("Estoy en probar.js")
+
 function generoControl(){
 
     //Inicializo la tabla
