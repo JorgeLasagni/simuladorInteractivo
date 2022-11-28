@@ -67,10 +67,10 @@ function bajaObra(){
     const mcodigo = prompt("Ingrese el código de IDENTIFICACIÓN de la obra a procesar:")
     const index = biblioteca.findIndex(kobra => kobra._codigo === mcodigo);
     if (index < 0){
-        alert("Atención! el código de Obra:<" +mcodigo+ +"> No Existe!");
+        alert("Atención! \n El código de Obra: <" +mcodigo+ +"> No Existe!");
     } else {
         const kobra = biblioteca[index]
-        const confirma = prompt(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo+"¿Confirma la ELIMINACIÓN de esta obra? SI o NO:")      
+        const confirma = prompt("Autor: "+kobra._apellido+", "+kobra._nombre+"\n Obra: "+kobra._titulo+"\n \n ¿Confirma la ELIMINACIÓN de esta obra? SI o NO:")      
         if (confirma === "SI"){
             biblioteca.splice(index,1);
             cargoTabla()
