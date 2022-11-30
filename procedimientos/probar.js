@@ -1,308 +1,284 @@
-//Procedimiento para simulación de Control de Biblioteca
-//Genero una plantilla para construir una OBRA en BIBLIOTECA
-class obra{
-    constructor(apellido, nombre, titulo, panel, subpanel, nivel, codigo){
-        this._apellido  = apellido;
-        this._nombre    = nombre;
-        this._titulo    = titulo;
-        this._panel     = panel;
-        this._subpanel  = subpanel;
-        this._nivel     = nivel;
-        this._codigo    = codigo;
-        // let numero = 0
-        // this._numero = function(){
-        //     numero = biblioteca.length + 1
-        //     return numero
-        // }
-    //     let dni = 0
-    // this._dni = function(){
-    //     dni = prompt("Ingrese el DNI de:"+this._nombre)
-    //     return dni
-    // }
-    }
-}
-
-//Defino elarray que va a contener a cada una de las Obras
-let biblioteca = [];
-let n = 0
-
-
-//alert("Estoy en probar.js")
-
-function generoControl(){
-
-    //Inicializo la tabla
-    //document.getElementById("tab").innerHTML="";
-
-    //Transformo a numéricos los valores cargados en html
-    let proceso=Number(document.getElementById("proceso").value);
-    //alert("Valor de s:"+proceso)
-
-    // let v=Number(document.getElementById("capital").value);
-    // let i=Number(document.getElementById("interes").value);
-    // let p=Number(document.getElementById("plazo").value);
-    // let f=Number(document.getElementById("frecuencia").value);
-
-    switch (proceso) {
-        case 1:     //altas automática por Lote
-            altaLote();
-            break;
-        case 2:     //alta por obra
-            altaObra();
-            break;
-        case 3:     //baja de una obra
-            bajaObra();
-            break;
-        case 4:     //modificación de una obra
-            modiObra();
-            break;
-        case 5:     //Selecciono alguna/s obra/s
-            seleObra();
-            break;
-        default:
-            alert("Debe seleccionar un PROCESO");
-            break;
-    }   
-}
-function altaLote(){
-    //Borro lo que tiene biblioteca
-    //biblioteca = [];
-    alert("Longitud en alta lote antes:"+biblioteca.length)
-    biblioteca.push(new obra("Linch", "John", "Administración colonial española 1782-1810", "Der", "Der", "1°", "A"+(biblioteca.length+1)));
-    biblioteca.push(new obra("Bauman", "Zygmunt", "Vida Líquida", "Der", "Izq", "2°", "A"+(biblioteca.length+1)));
-    biblioteca.push(new obra("Franklin", "H.Bruce", "Vietnam y las fantasías norteamericanas", "Izq", "Der", "3°", "A"+(biblioteca.length+1)));
-    alert("Longitud en alta lote despues:"+biblioteca.length)
-
-    //document.getElementById("tab").innerHTML="";
-    cargoTabla()
-
-    // const resultado = biblioteca.find( obra => obra._codigo === 'A2');
-    // console.log(resultado)
-    // alert(resultado._apellido+"-"+resultado._codigo)
-
-    //const resultado = biblioteca.indexOf( obra => obra._codigo === 'A2');
-    //console.log(resultado)
-
-    //alert(resultado._apellido+"-"+resultado._codigo)
-    //alert(resultado)
-    // const index = biblioteca.findIndex(obra => obra._codigo === "A2");
-    // alert(index)
-    // biblioteca.splice(index,1)
-    // //Inicializo la tabla
-    // doc ument.getElementById("tab").innerHTML="";
-    // cargoTabla()
-
-    //const resultado = inventario.find( fruta => fruta.nombre === 'cerezas' );
-//     const inventario = [
-//         {nombre: 'manzanas', cantidad: 2},
-//         {nombre: 'bananas', cantidad: 0},
-//         {nombre: 'cerezas', cantidad: 5}
-//     ];
-    
-//     const resultado = inventario.find( fruta => fruta.nombre === 'cerezas' );
-//  console.log(resultado);
-}
-//*--------------------------------------------------------------------*
-function altaObra(){
-    alert("Estoy en ALTA de una Obra");
-    const vapellido   = document.getElementById("apellido").value;
-    const vnombre     = document.getElementById("nombre").value;
-    const vtitulo     = document.getElementById("titulo").value;
-    const vpanel      = document.getElementById("panel").value;
-    const vsubpanel   = document.getElementById("subpanel").value;
-    const vnivel      = document.getElementById("nivel").value;
-
-    alert("En alta obra: "+vapellido+"-"+vnombre+"-"+vtitulo+"-"+vpanel+"-"+vsubpanel+"-"+vnivel)
-    
-    biblioteca.unshift(new obra(vapellido, vnombre, vtitulo, vpanel, vsubpanel, vnivel, "A"+(biblioteca.length+1)));
-
-    alert("Después de Incorporar al la biblioteca y por entrar a cargotabla En alta obra: "+vapellido+"-"+vnombre+"-"+vtitulo+"-"+vpanel+"-"+vsubpanel+"-"+vnivel)
-
-
-    cargoTabla()
-
-    alert("después de cargar la tabla En alta obra: "+vapellido+"-"+vnombre+"-"+vtitulo+"-"+vpanel+"-"+vsubpanel+"-"+vnivel)
-
-}
-//*--------------------------------------------------------------------*
-function bajaObra(){
-    alert("Estoy en BAJA de una Obra");
-    const mcodigo = prompt("Ingrese el código de IDENTIFICACIÓN de la obra a eliminar:")
-    const index = biblioteca.findIndex(kobra => kobra._codigo === mcodigo);
-    //alert(index+"<"+mcodigo+">")
-    if (index < 0){
-        alert("No Existe");
-    } else {
-        kobra = biblioteca[index]
-        alert(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo)
-
-        const confirma = prompt(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo+"¿Confirma la eliminación de esta obra? SI o NO:")
-        
-        if (confirma === "SI"){
-            biblioteca.splice(index,1);
-            //Inicializo la tabla
-            //document.getElementById("tab").innerHTML="";
-            cargoTabla()
-            alert("Despues de cargar tabla en baja: "+biblioteca.length)
-        }
-    }
-    // alert(index)
-    // biblioteca.splice(index,1)
-    // //Inicializo la tabla
-    // doc ument.getElementById("tab").innerHTML="";
-    // cargoTabla()
-    // if (biblioteca.indexOf >= 0){
-    //     alert("Existe!")
-    // } else {
-    //     alert("No Existe")
-    // }
-    
-}
-//*--------------------------------------------------------------------*
-function modiObra(){
-    alert("Estoy en MODIFICACIÓN de una Obra");
-}
-//*--------------------------------------------------------------------*
-function seleObra(){
-    alert("Estoy en SELECCIÓN de una o varias Obras");
-}
-//*--------------------------------------------------------------------*
-//*--------------------------------------------------------------------*
-function cargoTabla(){
-
-    //alert("Cantidad de elementos de biblioteca en CARGO TABLA:"+biblioteca.length)
-    //alert("Cantidad de elementos DE TAB en CARGO TABLA ANTES:"+tab.length)
-
-    document.getElementById("tab").innerHTML="";
-
-
-
-    //for (const pn = 0; pn < biblioteca.length; pn++){
-    for (n = 0; n < biblioteca.length; n++){    
-        const kobra = biblioteca[n]
-        //Cargo la fila en la tabla
-        document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-            `<tr class="table-primary">
-                <th scope="row">${kobra._codigo}</th>
-                <td> ${kobra._apellido+", "+kobra._nombre} </td>
-                <td> ${kobra._titulo} </td>
-                <td> ${kobra._panel+"-"+kobra._subpanel+"-"+kobra._nivel} </td>
-            </tr>`;
-    } 
-    //alert("Cantidad de elementos DE TAB en CARGO TABLA DESPUES:"+tab.length) 
-}
-//*--------------------------------------------------------------------*
-
-/* Ejercicio Pre Entrega .- Banco CoderJaus*/
-//Clase Cliente
-
-// class Clientes {
-//     constructor(nombre, apellido, dni, saldo) {
-//         this.nombre = nombre;
-//         this.apellido = apellido;
-//         this.dni = dni;
-//         this.saldo = saldo;
+// //Procedimiento para simulación de PRESTAMOS Sistema Alemán o Francés
+// class cuota{
+//     constructor(numero, capital, cuotaCapital, cuotaInteres, cuotaTotal, capitalVivo){
+//         this._numero        = numero;
+//         this._capital       = capital;
+//         this._cuotaCapital  = cuotaCapital;
+//         this._cuotaInteres  = cuotaInteres;
+//         this._cuotaTotal    = cuotaTotal;
+//         this._capitalVivo   = capitalVivo;
 //     }
 // }
+// //Defino elarray que va a contener a cada una de las Obras
+// let planPago = [];
 
-// const clienteSamuel = new Clientes("Samuel", "Tocaimaza", 12345678, 1000);
-// const clienteJuan = new Clientes("Juan", "Perez", 87654321, 2000);
-// const clienteMaria = new Clientes("Maria", "Gomez", 12345678, 3000);
-// const clientePedro = new Clientes("Pedro", "Gonzalez", 12345678, 4000);
+// const butn = document.getElementById("btn")
+// butn.addEventListener("click", generoCuotas)
+// //---------------------------------------------------------------------*
+// function generoCuotas(){
+//     planPago = [];
+//     //Inicializo la tabla
+//     document.getElementById("tab").innerHTML="";
 
-// const arrayClientes = [];
-
-// arrayClientes.push(clienteSamuel);
-// arrayClientes.push(clienteJuan);
-// arrayClientes.push(clienteMaria);
-// arrayClientes.push(clientePedro);
-
-// console.log(arrayClientes);
-
-// //Función con el menú de opciones:
-
-// function menu() {
-//     alert("Bienvenido al Banco CoderJaus");
-//     let opcion = parseInt(prompt("Ingrese una opción: \n 1) Alta de cliente \n 2) Baja de cliente \n 3) Modificación de cliente \n 4) Consulta de cliente \n 5) Salir"));
-//     return opcion;
+//     //Transformo a numéricos los valores cargados en html
+//     let s=Number(document.getElementById("sistema").value);
+//     let v=Number(document.getElementById("capital").value);
+//     let i=Number(document.getElementById("interes").value);
+//     let p=Number(document.getElementById("plazo").value);
+//     let f=Number(document.getElementById("frecuencia").value);
+//     //-----------------------------------------------------------------*
+//     //Validación de la carga...
+//     //funcion "valido" para control de la carga
+//     //s:sistema v:capital i:interés p:plazo f:frecuencia
+//     mensaje = valido(s,v,i,p,f)
+//     if (mensaje != ""){
+//         return alert(mensaje);
+//     }
+//     //-----------------------------------------------------------------*
+//     //Sumarizadores para mostrar los Totales
+//     let cct = 0.00;     //cc Total cuota capital
+//     let cit = 0.00;     //ci Total cuota interés
+//     let ctt = 0.00;     //ct Total cuota total 
+//     //-----------------------------------------------------------------*
+//     //Valores intermedios necesarios para los cálculos
+//     let cpa   = 12 / f;    //cantidad de pagos por año
+//     let ieq   = i / cpa;   //interés equivalente por período de pago
+//     let m     = p * cpa;   //Cantidad de pagos en el plazo anual
+//     let ca    = v;         //Capital Vivo!!
+//     let cv    = v;         //Capital Vivo!!
+//     //-----------------------------------------------------------------*
+//     //chequeo el interés para saber qué metodo aplicar para la potencia
+//     let queInteres = 0;
+//     if(i > 0 && i <= 25){
+//         queInteres = 1;
+//     } else if(i > 25 && i <= 50){
+//         queInteres = 2;
+//     } else {
+//         queInteres = 3;
+//     }
+//     //alert("queInteres:"+queInteres);
+//     //alert(potencia(2,5,queInteres));
+//     //------------------------------------------------------------------
+//     for(n = fDesde(s); n <= m; n++){
+//         switch(s){
+//             case 1:
+//                 //Capital
+//                 ca = v - (n-1) * v / m;               
+//                 //Cuota Capital
+//                 cc = v / m;
+//                 //Cuota Interés (amortización)
+//                 ci = ca * ieq / 100;
+//                 //Cuota Total
+//                 ct = cc + ci;
+//                 cv = cv - cc;
+//                 break;
+//             case 2:
+//                 if (n > 0){
+//                     //Cuota Total
+//                     pot = potencia((1+(ieq/100)),-m,queInteres);
+//                     ct  = (v * (ieq/100)) / (1 - pot);
+//                     //Cuota Interés (amortización)
+//                     //ci = ca * ieq / 100; orig
+//                     ci = cv * ieq / 100;
+//                     //Cuota Capital
+//                     cc = ct - ci;
+//                     //Capital
+//                     //ca = ca - cc; orig
+//                     ca = cv;
+//                     cv = cv - cc;
+//                 } else{
+//                     //Cuota Total
+//                     //a  = 0;
+//                     ct = 0;
+//                     //Cuota Interés (amortización)
+//                     ci = 0;
+//                     //Cuota Capital
+//                     cc = 0;
+//                     //Capital
+//                     ca = v;
+//                     cv = v;
+//                 }
+//                 break;
+//             case 3:
+//                 //Capital
+//                 ca = v;               
+//                 //Cuota Capital
+//                 cc = 0;
+//                 //Cuota Interés (amortización)
+//                 ci = ca * ieq / 100;
+//                 //Cuota Total
+//                 ct = cc + ci;
+//                 cv = cv - cc;
+//                 if (n == m){
+//                     cc = v;
+//                     cv = cv - cc;
+//                     ct = cc + ci;              
+//                 }
+//                 break;
+//         }  
+//         //-------------------------------------------------------------*   
+//         //Sumarizo los Totales por columnas
+//         cct = cct + cc;
+//         cit = cit + ci;
+//         ctt = ctt + ct;
+//         //-------------------------------------------------------------*
+        
+//         // //Preparo los parciales para la tabla
+//         // c1=ca.toFixed(2);
+//         // c2=cc.toFixed(2);
+//         // c3=ci.toFixed(2);
+//         // c4=ct.toFixed(2);
+//         // c5=cv.toFixed(2);
+//         // if (n>0){
+//         //     //Cargo la fila en la tabla
+//         //     document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+//         //         `<tr class="table-primary">
+//         //             <th scope="row">${n}</th>
+//         //             <td> ${c1} </td>
+//         //             <td> ${c2} </td>
+//         //             <td> ${c3} </td>
+//         //             <td> ${c4} </td>
+//         //             <td> ${c5} </td>
+//         //         </tr>`;
+//         // }
+//         if (n>0){
+//             planPago.push(new cuota(n, ca, cc, ci, ct, cv));
+//         }
+//     }
+//     //*----------------------------------------------------------------*
+//     cargoTabla(s)
+//     //*----------------------------------------------------------------*
+//     //*----------------------------------------------------------------*
+//     //Cargo los totales a la tabla
+//     //Paso los totales a dos decimales
+//     ct2=cct.toFixed(2);
+//     ct3=cit.toFixed(2);
+//     ct4=ctt.toFixed(2);
+//     //Cargo los totales en la tabla
+//     document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+//         `<tr class="table-dark">
+//             <th scope="row">Total</th>
+//             <td>        </td>
+//             <td> ${ct2} </td>
+//             <td> ${ct3} </td>
+//             <td> ${ct4} </td>
+//             <td>        </td>
+//         </tr>`;
 // }
-
-// //Función para dar de alta un cliente:
-
-// function altaCliente() {
-//     let nombre = prompt("Ingrese el nombre del cliente: ");
-//     let apellido = prompt("Ingrese el apellido del cliente: ");
-//     let dni = parseInt(prompt("Ingrese el DNI del cliente: "));
-//     let saldo = parseInt(prompt("Ingrese el saldo del cliente: "));
-//     let cliente = new Clientes(nombre, apellido, dni, saldo);
-//     arrayClientes.push(cliente);
-//     console.log(arrayClientes);
+// //----------------------------------------------------------------------
+// function valido(ps,pv,pi,pp,pf){
+//    //Sistema
+//     if (ps!=1 && ps!=2 && ps!=3){
+//         return "El sistema de cálculo debe ser Alemán o Francés o Americano"
+//     } 
+//     //Capital
+//     if (pv <= 0 || isNaN(pv)){
+//         return "El Capital solicitado debe ser numérico y mayor a $0!"
+//     }
+//     //Interés o tasa anual
+//     if (pi <= 0 || isNaN(pi)){
+//         return "El Interés o Tasa Anual debe ser numérica y positiva!"
+//     } 
+//     //Plazo de pago
+//     if (pp <= 0 || isNaN(pp) || !Number.isInteger(pp)){
+//         return "El Plazo de pago debe ser numérico, año calendario y mínimo uno!"
+//     } 
+//     //Frecuencia de pago
+//     switch(pf){
+//         case 1:
+//             break;
+//         case 2:
+//             break;  
+//         case 3:
+//             break;
+//         case 4:
+//             break; 
+//         case 6:
+//             break;
+//         case 12:
+//             break;         
+//         default:
+//             return "La Frecuencia de pago debe se mensual, bimestral, trimestral, cuatrimestral, semestral o anual!";
+//     }
+//     return "";
 // }
+// //----------------------------------------------------------------------
+// //La función potencia es más clara utilizando el "for" 
+// //Para apicar lo visto utilizo las tres iteracciones según el plazo de años
+// //case 1 Interés >00  y <= 10% (for)
+// //case 2 Interés >10  y <= 20% (while)
+// //case 3 Interés >20   (do while)
+// // uso el while para aplicar lo visto.
+// //Si el exponente es (-) lo multipico por -1 (o debería tomar el valor absoluto)
+// // para después obtener como resultado la inversa (1/x). 
+// //Si el exponente es positivo el resultado es x
+// function potencia (base, exponente, queAplico){
+//     let exp = exponente;
+//     //Si el exponente es negativo lo  hago positivo
+//     if (exp < 0){
+//         exp = exp * (-1);
+//     }
 
-// //Función para dar de baja un cliente:
+//     let res = 1;
+//     let pot = 1;
 
-// function bajaCliente() {
-//     let dni = parseInt(prompt("Ingrese el DNI del cliente: "));
-//     let cliente = arrayClientes.find(cliente => cliente.dni === dni);
-//     let indice = arrayClientes.indexOf(cliente);
-//     arrayClientes.splice(indice, 1);
-//     console.log(arrayClientes);
+//     switch (queAplico){
+//         case 1:
+//             while(pot <= exp){
+//                 res = res * base;
+//                 pot++;
+//             }
+//             break;
+//         case 2:
+//             for(pot = 1; pot <= exp; pot++){
+//                 res = res * base;
+//             }
+//             break;
+//         case 3:
+//             do{
+//                 res = res * base;
+//                 pot++;
+//             }while(pot <= exp);                
+//             break;
+//     }   
+//     //Si el exponente es negativo, invierto el resultado (1/x)
+//     if (exponente < 0){
+//         res = 1 / res;
+//     }
+//     return res
 // }
-
-// //Función para modificar un cliente:
-
-// function modificacionCliente() {
-//     let dni = parseInt(prompt("Ingrese el DNI del cliente: "));
-//     let cliente = arrayClientes.find(cliente => cliente.dni === dni);
-//     let indice = arrayClientes.indexOf(cliente);
-//     let nombre = prompt("Ingrese el nombre del cliente: ");
-//     let apellido = prompt("Ingrese el apellido del cliente: ");
-//     let saldo = parseInt(prompt("Ingrese el saldo del cliente: "));
-//     let clienteModificado = new Clientes(nombre, apellido, dni, saldo);
-//     arrayClientes.splice(indice, 1, clienteModificado);
-//     console.log(arrayClientes);
+// //---------------------------------------------------------------------*
+// function fDesde(sistema){
+//      // let desde = 0;         //Inicio del for distinto para cada sistema
+//     switch(sistema){
+//         case 1:
+//             return 1;
+//             break;
+//         case 2:
+//             return 0;    
+//             break;
+//         case 3:
+//             return 1;
+//             break;
+//         default:
+//                 alert("Error en definición de DESDE dónde arranca el for!")
+//     }ordenO
 // }
-
-// //Función para consultar un cliente:
-
-// function consultaCliente() {
-//     let dni = parseInt(prompt("Ingrese el DNI del cliente: "));
-//     let cliente = arrayClientes.find(cliente => cliente.dni === dni);
-//     console.log(cliente);
+// //---------------------------------------------------------------------*
+// function cargoTabla(s){
+//     document.getElementById("tab").innerHTML="";
+//     for (n = 0; n < planPago.length; n++){    
+//         const cuota = planPago[n]
+//         //Cargo la fila en la tabla
+//         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+//             `<tr class="table-primary">
+//                 <th scope="row">${cuota._numero}</th>
+//                 <td> ${cuota._capital.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaCapital.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaInteres.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaTotal.toFixed(2)} </td>
+//                 <td> ${cuota._capitalVivo.toFixed(2)} </td>
+//             </tr>`;
+//     } 
 // }
-
-
-// //Función para salir del programa:
-
-// function salir() {
-//     alert("Gracias por utilizar el Banco CoderJaus");
-// }
-
-// //Ejecuto el el programa:
-
-// let opcion = menu();
-// switch (opcion) {
-//     case 1:
-//         altaCliente();
-//         break;
-//     case 2:
-//         bajaCliente();
-//         break;
-//     case 3:
-//         modificacionCliente();
-//         break;
-//     case 4:
-//         consultaCliente();
-//         break;
-//     case 5:
-//         salir();
-//         break;
-//     default:
-//         alert("Opción incorrecta, rata!");
-//         break;
-// }
-
-
-
-
-
+// //Fin del JS-----------------------------------------------------------*

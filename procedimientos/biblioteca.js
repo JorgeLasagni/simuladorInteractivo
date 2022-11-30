@@ -14,9 +14,8 @@ class obra{
 }
 //Defino elarray que va a contener a cada una de las Obras
 let biblioteca = [];
-
+let biblioOriginal = [];
 const butn = document.getElementById("btn")
-//butn.onclick = generoControl()
 butn.addEventListener("click", generoControl)
 //---------------------------------------------------------------------*
 function generoControl(){
@@ -41,6 +40,9 @@ function generoControl(){
         case 6:     //Ordenar segun ...,
             ordenObra();
             break;
+        case 7:     //Volver al original ...,
+            volverObra();
+        break;
         default:
             alert("Debe seleccionar un PROCESO");
             break;
@@ -49,13 +51,7 @@ function generoControl(){
 
 //*--------------------------------------------------------------------*"
 function altaLote(){
-    // borro todo lo que cargué
-    //biblioteca = [];
-    // biblioteca.push(new obra("Linch", "John", "Administración colonial española 1782-1810", "DER", "DER", "1", "A"+(biblioteca.length+1)));
-    // biblioteca.push(new obra("Bauman", "Zygmunt", "Vida Líquida", "DER", "IZQ", "2", "A"+(biblioteca.length+1)));
-    // biblioteca.push(new obra("Franklin", "H.Bruce", "Vietnam y las fantasías norteamericanas", "IZQ", "DER", "3", "A"+(biblioteca.length+1)));
-    // biblioteca.push(new obra("Hernandez", "José", "Marín Fierro", "IZQ", "DER", "4", "A"+(biblioteca.length+1)));
-        
+
     biblioteca.push(new obra("Berbeglia","Carlos Enrique (coordinador)","Propuestas para una antropología argentina (tomo VII)","IZQ","IZQ","2","A"+(biblioteca.length+1)));
     biblioteca.push(new obra("Meillassoux","Claude","Mujeres, graneros y capitales","IZQ","IZQ","2","A"+(biblioteca.length+1)));
     biblioteca.push(new obra("Bucay ","Jorge Luis","De la autoestima al egoísmo","IZQ","IZQ","2","A"+(biblioteca.length+1)));
@@ -338,6 +334,7 @@ function altaLote(){
     biblioteca.push(new obra("Wallace","Irving","La 27 esposa","DER","IZQ","2","A"+(biblioteca.length+1)));
     biblioteca.push(new obra("Yllera","Alicia","Tristán e Iseo","DER","IZQ","2","A"+(biblioteca.length+1)));
     biblioteca.push(new obra("Bergman","Klaus Dr.","Profecías de Nostradamus","DER","IZQ","2","A"+(biblioteca.length+1)));
+    biblioOriginal = biblioteca
     cargoTabla()
 }
 //*--------------------------------------------------------------------*
@@ -349,6 +346,7 @@ function altaObra(){
         const vsubpanel   = prompt("Ingrese SubPanel de ubicación de la obra (DER-IZQ):");
         const vnivel      = prompt("Ingrese Nivel o Estante (1-2-3-4-5-6):");
         biblioteca.unshift(new obra(vapellido, vnombre, vtitulo, vpanel, vsubpanel, vnivel, "A"+(biblioteca.length+1)));
+        //biblioOriginal = biblioteca
         cargoTabla()
     }
 //*--------------------------------------------------------------------*
@@ -359,11 +357,12 @@ function bajaObra(){
         alert("Atención! \n El código de Obra: <" +mcodigo+ +"> No Existe!");
     } else {
         const kobra = biblioteca[index]
-        const confirma = prompt("Autor: "+kobra._apellido+", "+kobra._nombre+"\n Obra: "+kobra._titulo+"\n \n ¿Confirma la ELIMINACIÓN de esta obra? SI o NO:")      
-        if (confirma === "SI"){
+        const confirma = confirm("Autor: "+kobra._apellido+", "+kobra._nombre+"\n Obra: "+kobra._titulo+"\n \n ¿Confirma la ELIMINACIÓN de esta obra?")      
+        if (confirma === true){
             biblioteca.splice(index,1);
+            //biblioOriginal = biblioteca
             cargoTabla()
-        }
+        }   
     }
 }
 //*--------------------------------------------------------------------*
@@ -374,26 +373,41 @@ function modiObra(){
         alert("Atención! \n El código de Obra: <" +mcodigo+ +"> No Existe!");
     } else {
         const kobra = biblioteca[index]
-        const confirma = prompt(kobra._apellido+", "+kobra._nombre+"\n Obra: "+kobra._titulo+"\n \n ¿Confirma la MODIFICACIÓN de esta obra? SI o NO:")      
-        if (confirma === "SI"){
+        const confirma = confirm("Autor: "+kobra._apellido+", "+kobra._nombre+"\n Obra: "+kobra._titulo+"\n \n ¿Confirma la MODIFICACIÓN de esta obra?")
+        if (confirma === true){      
             kobra._apellido = prompt("Modifique el Apellido del autor: ", kobra._apellido)
             kobra._nombre   = prompt("Modifique el Nombre del autor: ", kobra._nombre)
             kobra._titulo   = prompt("Modifique el Título de la obra: ", kobra._titulo)
-            kobra.panel     = prompt("Modifique el Panel de ubicación de la obra: ", kobra._panel)
-            kobra.subpanel  = prompt("Modifique el SubPanel de ubicación de la obra: ", kobra._subpanel)
-            kobra.nivel     = prompt("Modifique el Nivel o Estante de ubicación de la obra: ", kobra._nivel)
+            kobra._panel     = prompt("Modifique el Panel de ubicación de la obra: ", kobra._panel)
+            kobra._subpanel  = prompt("Modifique el SubPanel de ubicación de la obra: ", kobra._subpanel)
+            kobra._nivel     = prompt("Modifique el Nivel o Estante de ubicación de la obra: ", kobra._nivel)
+            //biblioOriginal = biblioteca
             cargoTabla()
         }
     }
 }
 //*--------------------------------------------------------------------*
 function seleObra(){
-    //const result = words.filter(word => word.length > 6);
-
-    const kk = biblioteca.filter(kobra => kobra._panel === "DER");
-    // alert(kk)
-    // console.log(kk)
-
+    let kk = [];
+    const vapellido = prompt("Ingrese Apellido del autor:")
+    if (vapellido != null) {
+        kk = biblioteca.filter(kobra => kobra._apellido.includes(vapellido) === true);
+    } else{
+        const vnombre = prompt("Ingrese Nombre del autor:")
+        if (vnombre != null){
+            kk = biblioteca.filter(kobra => kobra._nombre.includes(vnombre) === true); 
+        } else{
+            const vtitulo = prompt("Ingrese Título de la obra:") 
+            if (vtitulo != null){
+                kk = biblioteca.filter(kobra => kobra._titulo.includes(vtitulo) === true);
+            } else{
+                const vpanel = prompt("Ingrese Panel de ubicación de la obra (DER-IZQ):")
+                if (vpanel != null){
+                    kk = biblioteca.filter(kobra => kobra._panel.includes(vpanel) === true);
+                } 
+            }
+        }
+    }
     document.getElementById("tab").innerHTML="";
     for (n = 0; n < kk.length; n++){    
         const kobra = kk[n]
@@ -408,12 +422,14 @@ function seleObra(){
     }
 }
 //*--------------------------------------------------------------------*
-function ordenObra(){
-    const oapellido  = prompt("Ordena por Apellido y Nombre del autor? (SI-NO: ", "SI")
-    const otitulo    = prompt("Ordena por Título de la obra? (SI-NO) ", "SI")
-    const oubicacion = prompt("Ordena por Ubicación de la obra: ", "NO")
+function ordenObra(){   
+    //biblioOriginal = biblioteca
+    const oapellido  = confirm("Ordena por Apellido y Nombre del autor?")
+    const otitulo    = confirm("Ordena por Título de la obra?")
+    const oubicacion = confirm("Ordena por Ubicación de la obra?")
+    
     biblioteca.sort(function (a, b) {
-        if (oapellido == "SI"){
+        if (oapellido === true){
             if (a._apellido+a._nombre > b._apellido+b._nombre) {
                 return 1;
             }
@@ -423,7 +439,7 @@ function ordenObra(){
               // a = b
             return 0;
         }else{
-            if (otitulo == "SI"){
+            if (otitulo === true){
                 if (a._titulo > b._titulo) {
                     return 1;
                 }
@@ -433,20 +449,26 @@ function ordenObra(){
                   // a = b
                 return 0; 
             }else{
-                if (a._panel+a._subpanel+a._nivel > b._panel+b._subpanel+b._nivel) {
-                    return 1;
+                if (oubicacion === true){
+                    if (a._panel+a._subpanel+a._nivel > b._panel+b._subpanel+b._nivel) {
+                        return 1;
+                    }
+                    if (a._panel+a._subpanel+a._nivel < b._panel+b._subpanel+b._nivel) {
+                        return -1;
+                    }
+                    // a = b
+                    return 0;
                 }
-                if (a._panel+a._subpanel+a._nivel < b._panel+b._subpanel+b._nivel) {
-                    return -1;
-                }
-                  // a = b
-                return 0;
             }
         }     
     });
     cargoTabla()
 }
 //*--------------------------------------------------------------------*
+function volverObra(){
+    biblioteca = biblioOriginal
+    cargoTabla()
+}
 //*--------------------------------------------------------------------*
 function cargoTabla(){
     document.getElementById("tab").innerHTML="";
@@ -463,177 +485,4 @@ function cargoTabla(){
     } 
 }
 //**********************************************************************
-
-// function generoControl(){
-//     alert("estoy en generoControl")
-//     //Transformo a numéricos los valores cargados en html
-//     let proceso=Number(document.getElementById("proceso").value);
-//     switch (proceso) {
-//         case 1:     //altas automática por Lote
-//             altaLote();
-//             break;
-//         case 2:     //alta por obra
-//             //altaObra();
-//             break;
-//         case 3:     //baja de una obra
-//             modiBajaObra();
-//             break;
-//         case 4:     //modificación de una obra
-//             modiBajaObra();
-//             break;
-//         case 5:     //Selecciono alguna/s obra/s
-//             seleObra();
-//             break;
-//         case 6:     //Ordenar segun ...,
-//             ordenObra();
-//             break;
-//         default:
-//             alert("Debe seleccionar un PROCESO");
-//             break;
-//     }   
-// }
-// function altaLote(){
-//     // borro todo lo que cargué
-//     //biblioteca = [];
-//     biblioteca.push(new obra("Linch", "John", "Administración colonial española 1782-1810", "DER", "DER", "1", "A"+(biblioteca.length+1)));
-//     biblioteca.push(new obra("Bauman", "Zygmunt", "Vida Líquida", "DER", "IZQ", "2", "A"+(biblioteca.length+1)));
-//     biblioteca.push(new obra("Franklin", "H.Bruce", "Vietnam y las fantasías norteamericanas", "IZQ", "DER", "3", "A"+(biblioteca.length+1)));
-//     biblioteca.push(new obra("Hernandez", "José", "Marín Fierro", "IZQ", "DER", "4", "A"+(biblioteca.length+1)));
-//     cargoTabla()
-// }
-// //*--------------------------------------------------------------------*
-// function altaObra(){
-//     // const vapellido   = document.getElementById("apellido").value;
-//     // const vnombre     = document.getElementById("nombre").value;
-//     // const vtitulo     = document.getElementById("titulo").value;
-//     // const vpanel      = document.getElementById("panel").value;
-//     // const vsubpanel   = document.getElementById("subpanel").value;
-//     // const vnivel      = document.getElementById("nivel").value;
-//     // biblioteca.unshift(new obra(vapellido, vnombre, vtitulo, vpanel, vsubpanel, vnivel, "A"+(biblioteca.length+1)));
-//     // cargoTabla()
-// }
-// //*--------------------------------------------------------------------*
-// function modiBajaObra(){
-//     //alert("Estoy en BAJA de una Obra");
-
-//     const mcodigo = prompt("Ingrese el código de IDENTIFICACIÓN de la obra a procesar:")
-//     const index = biblioteca.findIndex(kobra => kobra._codigo === mcodigo);
-
-//     // if (index < 0){
-//     //     alert("Atención! el código de Obra:<" +mcodigo+ +"> No Existe!");
-//     // } else {
-//     //     kobra = biblioteca[index]
-//     //     alert(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo)
-//     //     const confirma = prompt(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo+"¿Confirma la eliminación de esta obra? SI o NO:")      
-//     //     if (confirma === "SI"){
-//     //         biblioteca.splice(index,1);
-//     //         cargoTabla()
-//     //     }
-//     // }
-
-//     if (index < 0){
-//             alert("Atención! el código de Obra:<" +mcodigo+ +"> No Existe!");
-//         } else {
-
-//             let kobra = biblioteca[index]
-
-//             //alert(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo)
-//             //const confirma = prompt(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo+"¿Confirma la eliminación de esta obra? SI o NO:")      
-//             //if (confirma === "SI"){
-//             //    biblioteca.splice(index,1);
-//             //    cargoTabla()
-//             document.getElementById("apellido").value=kobra._apellido;
-//             document.getElementById("nombre").value=kobra._nombre;
-//             document.getElementById("titulo").value=kobra._titulo;
-//             document.getElementById("panel").value=kobra._panel;
-//             document.getElementById("subpanel").value=kobra._subpanel;
-//             document.getElementById("nivel").value=kobra._nivel;
-//             }
-//     }
-
-// //*--------------------------------------------------------------------*
-// // function modiObra(){
-// //     alert("Estoy en MODIFICACIÓN de una Obra");
-// // }
-// //*--------------------------------------------------------------------*
-// function seleObra(){
-//     alert("Estoy en SELECCIÓN de una o varias Obras");
-// }
-// //*--------------------------------------------------------------------*
-// function cargoTabla(){
-//     document.getElementById("tab").innerHTML=";
-//     for (n = 0; n < biblioteca.length; n++){    
-//         const kobra = biblioteca[n]
-//         //Cargo la fila en la tabla
-//         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
-//             `<tr class="table-primary">
-//                 <th scope="row">${kobra._codigo}</th>
-//                 <td> ${kobra._apellido+", "+kobra._nombre} </td>
-//                 <td> ${kobra._titulo} </td>
-//                 <td> ${kobra._panel+"-"+kobra._subpanel+"-"+kobra._nivel} </td>
-//             </tr>`;
-//     } 
-// }
-// //*--------------------------------------------------------------------*
-// function finalControl(){
-//     alert("Estoy en fiinal control")
-//     //Transformo a numéricos los valores cargados en html
-//     let proceso=Number(document.getElementById("proceso").value);
-//     const confirma = prompt("¿Confirma PROCESO? SI o NO:")
-//     if (confirma != "SI"){
-//         cargoTabla()
-//         return
-//     }
-
-//     switch (proceso) {
-
-//         // case 1:     //altas automática por Lote
-//         //     altaLote();
-//         //     break;
-
-//         case 2:     //alta por obra
-//             //altaObra();
-//             const vapellido   = document.getElementById("apellido").value;
-//             const vnombre     = document.getElementById("nombre").value;
-//             const vtitulo     = document.getElementById("titulo").value;
-//             const vpanel      = document.getElementById("panel").value;
-//             const vsubpanel   = document.getElementById("subpanel").value;
-//             const vnivel      = document.getElementById("nivel").value;
-//             biblioteca.unshift(new obra(vapellido, vnombre, vtitulo, vpanel, vsubpanel, vnivel, "A"+(biblioteca.length+1)));
-//             cargoTabla()                                                                     
-//             break;
-
-//         case 3:     //baja de una obra
-//             //fBajaObra();
-//             const confirma = prompt(kobra._apellido+", "+kobra._nombre+" "+kobra._titulo+"¿Confirma la eliminación de esta obra? SI o NO:")      
-//             if (confirma === "SI"){
-//                 biblioteca.splice(index,1);
-//                 cargoTabla()
-//             }
-//             break;
-
-//         case 4:     //modificación de una obra
-//             //fModiObra();
-//             kobra._apellido   = document.getElementById("apellido").value;
-//             kobra._nombre     = document.getElementById("nombre").value;
-//             kobra._titulo     = document.getElementById("titulo").value;
-//             kobra._panel      = document.getElementById("panel").value;
-//             kobra._subpanel   = document.getElementById("subpanel").value;
-//             kobra._nivel      = document.getElementById("nivel").value;
-
-//             //biblioteca.unshift(new obra(vapellido, vnombre, vtitulo, vpanel, vsubpanel, vnivel, "A"+(biblioteca.length+1)));
-
-//             cargoTabla()
-//             break;
-//         case 5:     //Selecciono alguna/s obra/s
-//             //seleObra();
-//             break;
-//         case 6:     //Ordenar segun ...,
-//             //ordenObra();
-//             break;
-//         default:
-//             alert("Debe seleccionar un PROCESO");
-//             break;
-//     }   
-// }
 //*Fin de biblioteca.js------------------------------------------------*
