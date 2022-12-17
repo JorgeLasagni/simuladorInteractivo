@@ -89,9 +89,9 @@ function codigo() {
 //---------------------------------------------------------------------*
 function validarFormulario(e){
     e.preventDefault(); //para que no se ejecute automáticamente
-
+     mensajeError = ""
     if(validoCampos() === false) {
-        alert('Todos los campos son obligatorios');
+        Swal.fire(mensajeError)
         return;
     }
     if(editando) {
@@ -108,7 +108,20 @@ function validarFormulario(e){
 //Faltan validaciones!!
 function validoCampos() {
     if (apellidoInput.value === "" || nombreInput.value === "" || tituloInput.value === "") {
-        return false;
+        mensajeError = "Debe completar los campos Apellido - Nombre - Título"
+        return false
+    }
+    if (panelInput.value !== "IZQ" && panelInput.value !== "DER") {
+        mensajeError = "Panel debe ser IZQ o DER"
+        return false
+    }
+    if (subpanelInput.value !== "IZQ" && subpanelInput.value !== "DER") {
+        mensajeError = "SubPanel debe ser IZQ o DER"
+        return false
+    }
+    if (nivelInput.value < 1 || nivelInput.value > 6) {
+        mensajeError = "Nivel debe ser 1, 2, 3, 4, 5 o 6"
+        return false
     }
 }
 //---------------------------------------------------------------------*
@@ -167,7 +180,6 @@ function cargarObra(kid) {
     subpanelInput.value = subpanel;
     nivelInput.value    = nivel;
     objObra.id          = id;
-
     formulario.querySelector('button[type="submit"]').textContent = 'Actualizar';
     editando = true;
 }
@@ -424,7 +436,7 @@ function altaLote(){
     biblioteca.push(new obra("Manfredi","Valerio Massimo","Los Idus de marzo","DER","IZQ","2",codigo()));
     biblioteca.push(new obra("Manfredi","Valerio Massimo","La última legión","DER","IZQ","2",codigo()));
     biblioteca.push(new obra("Manfredi","Valerio Massimo","El Tirano","DER","IZQ","2",codigo()));
-    biblioteca.push(new obra("Manfredi","Valerio Massimo"," ","DER","IZQ","2",codigo()));
+    biblioteca.push(new obra("Manfredi","Valerio Massimo","El Título que todos desconocemos","DER","IZQ","2",codigo()));
     biblioteca.push(new obra("Achebe","Chinua","Trilogía Africana","DER","IZQ","2",codigo()));
     biblioteca.push(new obra("Conrad","Joseph","El corazón de las tinieblas","DER","IZQ","2",codigo()));
     biblioteca.push(new obra("D´Elia","Miguel Alfredo","Caminos ilesos","DER","IZQ","2",codigo()));
@@ -464,155 +476,81 @@ function altaLote(){
     biblioteca.push(new obra("Bergman","Klaus Dr.","Profecías de Nostradamus","DER","IZQ","2", codigo()));
 }
 //*--------------------------------------------------------------------*
-// function ordeno(orden){
-//     if (orden  === "dmaM"){
-//         return 1
-//     }else {
-//         return -1
-//     }
-// }
-//*--------------------------------------------------------------------*
 function ordenObra(ordenamiento,campo){  
-    //alert("estoy en orden obra: "+ordenamiento+"-"+campo) 
     if (ordenamiento === "dmaM") {
-        biblioteca.sort(function (a ,b)  {
-            if (campo === "codigo") {
-                if (a.id > b.id) {
-                    return 1;
-                }
-                if (a.id < b.id) {
-                    return -1;
-                }
-                alert("="+ordenamiento+":"+ordeno(ordenamiento));
-                // a = b
-                return 0;
-            } else {
-                if (campo === "autor") {
-                    if (a.apellido+a.nombre > b.apellido+b.nombre) {
-                        return 1;
-                    }
-                    if (a.apellido+a.nombre < b.apellido+b.nombre) {
-                        return -1;
-                    }
-                    // a = b
-                        return 0;
-                } else {
-                    if (campo === "titulo"){
-                        if (a.titulo > b.titulo) {
-                            return 1;
-                        }
-                        if (a.titulo < b.titulo) {
-                            return -1;
-                        }
-                            // a = b
-                            return 0; 
-                    } else {
-                        if (campo === "panel") {
-                            if (a.panel > b.panel) {
-                                return 1;
-                            }
-                            if (a.panel < b.panel) {
-                                return -1;
-                            }
-                            // a = b
-                            return 0;
-                        } else {
-                            if (campo === "subpanel") {
-                                if (a.subpanel > b.subpanel) {
-                                    return 1;
-                                }
-                                if (a.subpanel < b.subpanel) {
-                                    return -1;
-                                }
-                                // a = b
-                                return 0;
-                        } else {
-                            if (campo === "nivel") {
-                                if (a.nivel > b.nivel) {
-                                    return 1;
-                                }
-                                if (a.nivel < b.nivel) {
-                                    return -1;
-                                }
-                                // a = b
-                                return 0;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        } else {
-        biblioteca.sort(function (a ,b)  {
-            if (campo === "codigo") {
-                if (a.id > b.id) {
-                    return -1;
-                }
-                if (a.id < b.id) {
-                    return 1;
-                }
-                alert("="+ordenamiento+":"+ordeno(ordenamiento));
-                // a = b
-                return 0;
-            } else {
-                if (campo === "autor") {
-                    if (a.apellido+a.nombre > b.apellido+b.nombre) {
-                        return -1;
-                    }
-                    if (a.apellido+a.nombre < b.apellido+b.nombre) {
-                        return 1;
-                    }
-                    // a = b
-                        return 0;
-                } else {
-                    if (campo === "titulo"){
-                        if (a.titulo > b.titulo) {
-                            return -1;
-                        }
-                        if (a.titulo < b.titulo) {
-                            return 1;
-                        }
-                            // a = b
-                            return 0; 
-                    } else {
-                        if (campo === "panel") {
-                            if (a.panel > b.panel) {
-                                return -1;
-                            }
-                            if (a.panel < b.panel) {
-                                return 1;
-                            }
-                            // a = b
-                            return 0;
-                        } else {
-                            if (campo === "subpanel") {
-                                if (a.subpanel > b.subpanel) {
-                                    return -1;
-                                }
-                                if (a.subpanel < b.subpanel) {
-                                    return 1;
-                                }
-                                // a = b
-                                return 0;
-                        } else {
-                            if (campo === "nivel") {
-                                if (a.nivel > b.nivel) {
-                                    return -1;
-                                }
-                                if (a.nivel < b.nivel) {
-                                    return 1;
-                                }
-                                // a = b
-                                return 0;
-                            }
-                        }
-                    }
-                }
-            }
+        salMas    =  1
+        salMenos  = -1
+    }else {
+        salMas    = -1
+        salMenos  =  1
     }
-});
-}
+    biblioteca.sort(function (a ,b)  {
+        if (campo === "codigo") {
+            if (a.id > b.id) {
+                return salMas;
+            }
+            if (a.id < b.id) {
+                return salMenos;
+            }
+            // a = b
+            return 0;
+        } else {
+            if (campo === "autor") {
+                if (a.apellido+a.nombre > b.apellido+b.nombre) {
+                    return salMas;
+                }
+                if (a.apellido+a.nombre < b.apellido+b.nombre) {
+                    return salMenos;
+                }
+                // a = b
+                    return 0;
+            } else {
+                if (campo === "titulo"){
+                    if (a.titulo > b.titulo) {
+                        return salMas
+                    }
+                    if (a.titulo < b.titulo) {
+                        return salMenos;
+                    }
+                        // a = b
+                        return 0; 
+                } else {
+                    if (campo === "panel") {
+                        if (a.panel > b.panel) {
+                            return salMas
+                        }
+                        if (a.panel < b.panel) {
+                            return salMenos;
+                        }
+                        // a = b
+                        return 0;
+                    } else {
+                        if (campo === "subpanel") {
+                            if (a.subpanel > b.subpanel) {
+                                return salMas
+                            }
+                            if (a.subpanel < b.subpanel) {
+                                return salMenos;
+                            }
+                            // a = b
+                            return 0;
+                    } else {
+                        if (campo === "nivel") {
+                            if (a.nivel > b.nivel) {
+                                return salMas
+                            }
+                            if (a.nivel < b.nivel) {
+                                return salMenos;
+                            }
+                            // a = b
+                            return 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
     guardoLote();
     mostrarObras(biblioteca);
 }
