@@ -198,10 +198,8 @@ function potencia (base, exponente, queAplico){
     if (exp < 0){
         exp = exp * (-1);
     }
-
     let res = 1;
     let pot = 1;
-
     switch (queAplico){
         case 1:
             while(pot <= exp){

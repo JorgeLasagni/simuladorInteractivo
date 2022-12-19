@@ -7,8 +7,9 @@ body{
     background-color: bisque;
 }
 .contenedor {
-    width: 100%;
-    height: calc(97vh - 100px);
+    padding-left: 1%;
+    width: 99%;
+    height: calc(95vh - 100px);
     /*height: calc(100vh - 100px);*/
     display: flex;
     justify-content: center;
