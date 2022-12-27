@@ -96,19 +96,17 @@ body {
   margin: 10px 10px;
 }
 
-.global {
-  height: 85%;
-  width: 100%;
-  border: double blue;
-  background: #f1f1f1;
-  overflow-y: scroll;
+/*.global {
+    height: 85%;
+    width: 100%;
+    border: double blue;
+	background: #f1f1f1;
+	overflow-y: scroll;
 }
-
 .obras {
-  height: auto;
-  border: double rgb(226, 93, 193);
-}
-
+	height: auto;
+    border: double rgb(226, 93, 193);
+}*/
 thead {
   position: -webkit-sticky;
   position: sticky;
