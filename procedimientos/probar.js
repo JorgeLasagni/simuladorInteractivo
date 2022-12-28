@@ -51,8 +51,8 @@ mostrarObras(biblioteca);
 
 //Variable para control de edición -cuándo tiene que dar un alta, modificar (o eliminar)
 let editando    = false;
-const fTitulo   = document.querySelector('#fTitulo');
-const fApellido = document.querySelector('#fApellido');
+//const fTitulo   = document.querySelector('#fTitulo');
+//const fApellido = document.querySelector('#fApellido');
 // Campos del formulario
 const formulario    = document.querySelector('#formulario');
 const apellidoInput = document.querySelector('#apellido');
@@ -156,9 +156,12 @@ function editarObra() {
     const index = biblioteca.findIndex(obra => obra.id === objObra.id);
     biblioteca.splice(index,1);
     biblioteca.unshift(new obra(apellidoInput.value, nombreInput.value, tituloInput.value, panelInput.value, subpanelInput.value, nivelInput.value, objObra.id));
+    
     guardoLote()
     mostrarObras(biblioteca);
     formulario.reset();
+    document.getElementById("fApellido").value  = '';
+    document.getElementById("fTitulo").value    = '';
     formulario.querySelector('button[type="submit"]').textContent = 'Agregar'
     editando = false;
 }
@@ -202,8 +205,8 @@ function mostrarObras(tablaGral){
                 <td> ${panel}</td>
                 <td> ${subpanel} </td>
                 <td> ${nivel} </td>
-                <td> <button id="focusButtom" class= "btn btn-editar   btn-success colorBoton" onclick="cargarObra(${id})"   >Editar</button> </td>
-                <td> <button class= "btn btn-eliminar btn-danger" onclick="eliminarObra(${id})" >Eliminar</button> </td>
+                <td> <button  class= "btn btn-editar   btn-success colorBoton" onclick="cargarObra(${id})"   >Editar</button>      </td>
+                <td> <button  class= "btn btn-eliminar btn-danger"             onclick="eliminarObra(${id})" >Eliminar</button>    </td>
             </tr>`;
     })
 }
@@ -249,6 +252,8 @@ function eliminarObra(id) {
             'La Obra seleccionada ha sido eliminada.',
             'success'
         )
+        document.getElementById("fApellido").value  = '';
+        document.getElementById("fTitulo").value    = '';    
         guardoLote();
         mostrarObras(biblioteca);
         }
@@ -288,7 +293,29 @@ function eliminarObra(id) {
 //     mostrarObras(biblioteca);
 // }
 //---------------------------------------------------------------------*
-function altaLote(){ 
+function altaLote() {
+    //const listado = document.getElementById("listado");
+    const listadoObras = "informacion/biblioteca.json";
+
+    fetch(listadoObras)
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            datos.forEach( producto => {
+                listado.innerHTML += `
+                <h2> Nombre: ${producto.nombre} </h2>
+                <p> Precio: ${producto.precio} </p>
+                <p> ID: ${producto.id} </p>
+                `
+            })
+        })
+        .catch(error => console.log(error))
+        .finally( () => {
+            console.log("Proceso Finalizado ahhhhh");
+        })
+}
+//---------------------------------------------------------------------*
+function altaLoteManual(){ 
+
     biblioteca.push(new obra("Berbeglia","Carlos Enrique (coordinador)","Propuestas para una antropología argentina (tomo VII)","IZQ","IZQ","2", codigo()));
     biblioteca.push(new obra("Meillassoux","Claude","Mujeres, graneros y capitales","IZQ","IZQ","2", codigo()));
     biblioteca.push(new obra("Bucay ","Jorge Luis","De la autoestima al egoísmo","IZQ","IZQ","2", codigo()));
@@ -691,8 +718,18 @@ function cargaObrasAnterior() {
 }
 //---------------------------------------------------------------------*
 function eliminarFiltros(){
-    //fApellido.reset();
-    //fTitulo.reset();
+
+    //document.getElementById("fApellido").placeholder    = "Ingrese letras para filtrar";
+    //document.getElementById("fTitulo").placeholder      = "Ingrese letras para filtrar";
+   // document.querySelector('.kk').defaultValue
+    //document.getElementById("fApellido").placeholder.defaultValue    = "Ingrese letras para filtrar...";
+
+    //document.querySelector('.filtroApellido').value = '';
+    //document.querySelector('.filtroTitulo').value = '';
+
+    document.getElementById("fApellido").value  = '';
+    document.getElementById("fTitulo").value  = '';
+
     recuperoLote();
     mostrarObras(biblioteca);
 }
