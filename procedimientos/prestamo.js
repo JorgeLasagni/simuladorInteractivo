@@ -13,6 +13,9 @@ class cuota{
 //Defino elarray que va a contener a cada una de las Obras
 let planPago = [];
 
+//provisorio
+let cotizacion = 0.00
+buscoCotizacion()
 const butn = document.getElementById("btn")
 butn.addEventListener("click", generoCuotas)
 //---------------------------------------------------------------------*
@@ -20,13 +23,18 @@ function generoCuotas(){
     planPago = [];
     //Inicializo la tabla
     document.getElementById("tab").innerHTML="";
-
     //Transformo a numéricos los valores cargados en html
     let s=Number(document.getElementById("sistema").value);
     let v=Number(document.getElementById("capital").value);
     let i=Number(document.getElementById("interes").value);
     let p=Number(document.getElementById("plazo").value);
     let f=Number(document.getElementById("frecuencia").value);
+    let t=Number(document.getElementById("tipoDolar").value);
+
+    //alert(t)
+
+    cotizacion = t
+
     //-----------------------------------------------------------------*
     //Validación de la carga...
     //funcion "valido" para control de la carga
@@ -128,12 +136,14 @@ function generoCuotas(){
     //*----------------------------------------------------------------*
     cargoTabla(s)
     //*----------------------------------------------------------------*
-    //*----------------------------------------------------------------*
     //Cargo los totales a la tabla
     //Paso los totales a dos decimales
     ct2=cct.toFixed(2);
     ct3=cit.toFixed(2);
     ct4=ctt.toFixed(2);
+    ct5=(cct/cotizacion).toFixed(2);
+    ct6=(cit/cotizacion).toFixed(2);
+    ct7=(ctt/cotizacion).toFixed(2);
     //Cargo los totales en la tabla
     document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
         `<tr class="table-dark">
@@ -142,6 +152,10 @@ function generoCuotas(){
             <td> ${ct2} </td>
             <td> ${ct3} </td>
             <td> ${ct4} </td>
+            <td>        </td>
+            <td> ${ct5} </td>
+            <td> ${ct6} </td>
+            <td> ${ct7} </td>
             <td>        </td>
         </tr>`;
 }
@@ -180,6 +194,10 @@ function valido(ps,pv,pi,pp,pf){
         default:
             return "La Frecuencia de pago debe se mensual, bimestral, trimestral, cuatrimestral, semestral o anual!";
     }
+    //Cotización
+    if (cotizacion <= 0 || isNaN(cotizacion) ){
+        return "El tipo de cambio seleccionado debe estar definido y ser mayor a CERO!"
+    } 
     return "";
 }
 //----------------------------------------------------------------------
@@ -256,7 +274,89 @@ function cargoTabla(s){
                 <td> ${cuota._cuotaInteres.toFixed(2)} </td>
                 <td> ${cuota._cuotaTotal.toFixed(2)} </td>
                 <td> ${cuota._capitalVivo.toFixed(2)} </td>
+                <td class="table-danger"> ${(cuota._capital/cotizacion).toFixed(2)}        </td>
+                <td class="table-danger"> ${(cuota._cuotaCapital/cotizacion).toFixed(2)}   </td>
+                <td class="table-danger"> ${(cuota._cuotaInteres/cotizacion).toFixed(2)}   </td>
+                <td class="table-danger"> ${(cuota._cuotaTotal/cotizacion).toFixed(2)}     </td>
+                <td class="table-danger"> ${(cuota._capitalVivo/cotizacion).toFixed(2)}    </td>
             </tr>`;
     } 
 }
+// function cargoTabla(s){
+//     document.getElementById("tab").innerHTML="";
+//     for (n = 0; n < planPago.length; n++){    
+//         const cuota = planPago[n]
+//         //Cargo la fila en la tabla
+//         document.getElementById("tab").innerHTML=document.getElementById("tab").innerHTML+
+//             `<tr class="table-primary">
+//                 <th scope="row">${cuota._numero}</th>
+//                 <td> ${cuota._capital.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaCapital.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaInteres.toFixed(2)} </td>
+//                 <td> ${cuota._cuotaTotal.toFixed(2)} </td>
+//                 <td> ${cuota._capitalVivo.toFixed(2)} </td>
+//             </tr>`;
+//     } 
+// }
+
+function buscoCotizacion(){
+    const apiDolar = "https://criptoya.com/api/dolar";
+    const divDolar = document.getElementById("divDolar");
+    //setInterval( () => {
+    fetch(apiDolar)
+        .then(response => response.json())
+        .then(( {blue, ccb, ccl, mep, oficial, solidario, time}) => {
+            dateTime= (new Date((time * 1000))).toLocaleString()
+            divDolar.innerHTML = `
+            <select class="form-select" aria-label="Default select example" id="tipoDolar">
+            <option selected>Seleccione Tipo de cambio para expresión en u$s</option>
+            <option value=${0}>de CriptoYa: ${dateTime} </option>
+            <option value=${oficial}>      Dolar Oficial: $${oficial}     </option>
+            <option value=${solidario}>    Dolar Solidario: $${solidario} </option>
+            <option value=${mep}>          Dolar MEP: $${mep}             </option>
+            <option value=${ccl}>          Dolar CCL: $${ccl}             </option>
+            <option value=${ccb}>          Dolar CCB: $${ccb}             </option>
+            <option value=${blue}>         Dolar Blue: $${blue}           </option>
+            </select>
+                `
+        })
+        .catch(error => console.error(error))
+
+//}, 3000)
+}
+//"mepgd30":327.99,"cclgd30":332.3,"time":1672348019
+// /** CRIPTO YA **/
+
+// const criptoYa = "https://criptoya.com/api/dolar";
+
+// const divDolar = document.getElementById("divDolar");
+
+// setInterval( () => {
+//     fetch(criptoYa)
+//         .then(response => response.json())
+//         .then(( {blue, ccb, ccl, mep, oficial, solidario}) => {
+//             divDolar.innerHTML = `
+//                 <h2> Tipos de Dolar </h2>
+//                 <p> Dolar Oficial: ${oficial} </p>
+//                 <p> Dolar Solidario: ${solidario} </p>
+//                 <p> Dolar MEP: ${mep} </p>
+//                 <p> Dolar CCL: ${ccl} </p>
+//                 <p> Dolar CCB: ${ccb} </p>
+//                 <p> Dolar Blue: ${blue} </p>
+//                 `
+//         })
+//         .catch(error => console.error(error))
+
+// }, 3000)
+
+// function secondsToString(seconds) {
+//     var hour = Math.floor(seconds / 3600);
+//     hour = (hour < 10)? '0' + hour : hour;
+//     var minute = Math.floor((seconds / 60) % 60);
+//     minute = (minute < 10)? '0' + minute : minute;
+//     var second = seconds % 60;
+//     second = (second < 10)? '0' + second : second;
+//     return hour + ':' + minute + ':' + second;
+//   }
+
 //Fin del JS-----------------------------------------------------------*
