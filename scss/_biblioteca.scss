@@ -10,7 +10,6 @@ body{
     padding-left: 1%;
     width: 99%;
     height: calc(95vh - 100px);
-    /*height: calc(100vh - 100px);*/
     display: flex;
     justify-content: center;
 }
@@ -38,19 +37,6 @@ body{
     padding: 10px 10px;
     margin: 10px 10px;
 }
-
-/*.global {
-    height: 85%;
-    width: 100%;
-    border: double blue;
-	background: #f1f1f1;
-	overflow-y: scroll;
-}
-.obras {
-	height: auto;
-    border: double rgb(226, 93, 193);
-}*/
-
 thead {
     position: sticky;
     top: 0;

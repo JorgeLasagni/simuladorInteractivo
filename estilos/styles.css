@@ -64,7 +64,6 @@ body {
   padding-left: 1%;
   width: 99%;
   height: calc(95vh - 100px);
-  /*height: calc(100vh - 100px);*/
   display: flex;
   justify-content: center;
 }
@@ -96,22 +95,10 @@ body {
   margin: 10px 10px;
 }
 
-/*.global {
-    height: 85%;
-    width: 100%;
-    border: double blue;
-	background: #f1f1f1;
-	overflow-y: scroll;
-}
-.obras {
-	height: auto;
-    border: double rgb(226, 93, 193);
-}*/
 thead {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
 }
 
-/*@import "probar";*/
 /*Fin del SCSS--------------------------------*//*# sourceMappingURL=styles.css.map */
